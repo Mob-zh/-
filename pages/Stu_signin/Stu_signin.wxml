@@ -1,0 +1,23 @@
+
+<view class="sign_in">
+    <input type="text" required="required" placeholder="请输入签到码" >
+    </input>
+</view>
+
+<button class="btn" type="primary" bindtap="goadmin">确认</button>
+
+<!-- 虚拟tabbar -->
+<view class="bottom-nav">
+  <navigator url="/pages/Stu_choose/Stu_choose" class="nav-item">
+    <image src="/image/home.png" class="icon"></image>
+    <text>首页</text>
+  </navigator>
+  <navigator url="/pages/Stu_signin/Stu_signin" class="nav-item">
+    <image src="/image/签到_tap.png" class="icon"></image>
+    <text>快捷签到</text>
+  </navigator>
+  <navigator url="/pages/Myinfo/Myinfo"  class="nav-item">
+    <image src="/image/signs.png" class="icon"></image>
+    <text>我的</text>
+  </navigator>
+</view>

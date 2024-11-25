@@ -1,0 +1,33 @@
+
+<view class="header">
+    <text class="header-title">我的班级</text>
+  </view>
+<view class="class-list">
+  <block wx:for="{{classList}}" wx:key="id">
+    <view class="class-item" bindtap="goToClassDetail" data-id="{{item.id}}">
+      <text class="class-name">{{item.name}}</text>
+      <text class="class-description">{{item.description}}</text>
+    </view>
+  </block>
+  <view class="join-class-button">
+    <button class="add-class-btn" bindtap="joinClass">加入新的班级</button>
+  </view>
+  <view class="create-class-button">
+    <button class="create-class-btn" bindtap="CreateClass">创建新的班级</button>
+  </view>
+</view>
+
+<view class="bottom-nav">
+  <navigator url="/pages/Tea_choose/Tea_choose" class="nav-item">
+    <image src="/image/home_tap.png" class="icon"></image>
+    <text>首页</text>
+  </navigator>
+
+  <navigator url="/pages/Myinfo/Myinfo"  class="nav-item">
+    <image src="/image/signs.png" class="icon"></image>
+    <text>我的</text>
+  </navigator>
+  
+</view>
+
+

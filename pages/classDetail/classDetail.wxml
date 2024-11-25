@@ -1,0 +1,11 @@
+<view class="class-detail">
+  <view>
+    <text class="class-name">{{classDetail.name}}</text>
+  </view>
+  <view>
+    <text>简介：{{classDetail.description}}</text>
+  </view>
+  <view>
+    <text>任课老师：{{classDetail.teacher}}</text>
+  </view>
+</view>

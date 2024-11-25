@@ -1,0 +1,23 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/login2/login2",
+    "pages/Tea_choose/Tea_choose",
+    "pages/Stu_choose/Stu_choose",
+    "pages/Stu_signin/Stu_signin",
+    "pages/classDetail/classDetail",
+    "pages/joinClass/joinClass",
+    "pages/createClass/createClass",
+    "pages/Myinfo/Myinfo",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarBackgroundColor": "#ffffff"
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

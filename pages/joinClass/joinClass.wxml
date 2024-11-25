@@ -1,0 +1,21 @@
+<view class="page-container">
+  <!-- 页面标题 -->
+  <view class="header">
+    <text class="title">加入班级</text>
+  </view>
+
+  <!-- 用户身份回显 -->
+  <view class="user-info">
+    <text class="info-label">您的身份：</text>
+    <text class="info-value">{{identity}}</text>
+  </view>
+
+  <!-- 输入班级码 -->
+  <view class="input-section">
+    <text class="input-label">班级码：</text>
+    <input class="class-code-input" placeholder="请输入班级码" bindinput="onClassCodeInput" />
+  </view>
+
+  <!-- 提交按钮 -->
+  <button class="submit-btn" bindtap="joinClass">加入班级</button>
+</view>
