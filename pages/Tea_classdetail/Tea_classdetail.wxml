@@ -1,5 +1,7 @@
-<view class="class-info">
-  <view>
+<view class="page-container">
+  <!-- 课程信息部分 -->
+  <view class="class-info">
+    <view>
       <text class="title">{{classInfo.name}} - {{classInfo.description}} </text>
     </view>
     <view>
@@ -14,4 +16,11 @@
     <view>
       <text>课程地点: {{classInfo.location}}</text>
     </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="actions">
+    <button class="btn" bindtap="initiateSignIn">发起签到</button>
+    <button class="btn" bindtap="viewSignInStatus">查看签到情况</button>
+  </view>
 </view>

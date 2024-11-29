@@ -8,13 +8,13 @@ Page({
     classList: [
       { id: 1, name: "软件工程", description: "1班" },
       { id: 2, name: "软件工程", description: "2班" },
-      
     ]
   },
   goToClassDetail(event) {
     const classId = event.currentTarget.dataset.id;
+    console.log(classId);
     wx.navigateTo({
-      url: `/pages/T_classDetail/T_classDetail?id=${classId}`
+      url: `/pages/Tea_classdetail/Tea_classdetail?id=${classId}`
     });
   },
   // 点击加入班级

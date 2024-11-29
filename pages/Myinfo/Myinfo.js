@@ -6,6 +6,7 @@ Page({
    */
   data: {
     userInfo: {
+      userRole: '' ,// 默认空值
       avatarUrl: "/image/person.png", // 默认头像
       nickName: "用户昵称",
       phone: "" // 手机号
@@ -20,6 +21,9 @@ Page({
     const app = getApp();
     const userInfo = app.globalData.userInfo || {};
     this.setData({ userInfo });
+    this.setData({
+      userRole: app.globalData.userRole // 赋值全局变量
+    });
   },
   editProfile() {
     wx.navigateTo({
@@ -40,6 +44,19 @@ Page({
         }
       }
     });
+  },
+
+  navigateToHome() {
+    // 根据 userRole 跳转到不同页面
+    if (this.data.userRole === 'student') {
+      wx.navigateTo({
+        url: '/pages/Stu_choose/Stu_choose'
+      });
+    } else {
+      wx.navigateTo({
+        url: '/pages/Tea_choose/Tea_choose'
+      });
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

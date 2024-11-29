@@ -1,29 +1,13 @@
-// pages/Stu_choose.js
+// pages/Tea_signin_detail/Tea_signin_detail.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    classList: [
-      { id: 1, name: "软件工程", description: "2024年秋1班" },
-      { id: 2, name: "编译原理", description: "2024年秋1班" },
-      { id: 3, name: "数据结构", description: "2023年秋1班" }
-    ]
+
   },
-  goToClassDetail(event) {
-    const classId = event.currentTarget.dataset.id;
-    console.log(classId);
-    wx.navigateTo({
-      url: `/pages/classDetail/classDetail?id=${classId}`
-    });
-  },
-  // 点击加入班级
-  joinClass() {
-    wx.navigateTo({
-      url: '/pages/joinClass/joinClass'
-    });
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */

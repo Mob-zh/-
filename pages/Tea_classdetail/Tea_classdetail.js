@@ -1,4 +1,4 @@
-// pages/classDetail/classDetail.js
+// pages/Tea_classdetail/Tea_classdetail.js
 Page({
 
   /**
@@ -13,13 +13,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    const id = options.id;
+    const id = options.id; // 获取传递的课程ID
     this.setData({ classId: id });
-    // 模拟获取班级详情
+    // 模拟获取课程信息（可替换为接口请求）
     const allClasses = [
-      { id: 1, name: "软件工程", description: "2024年秋1班", teacher: "周老师" ,schedule: "周一到周五，8:00-10:00",location: "A301教室"},
-      { id: 2, name: "编译原理", description: "2024年秋", teacher: "袁老师" ,schedule: "周一到周五，10:20-12:00",location: "A301教室"},
-      { id: 3, name: "数据结构", description: "2023年秋", teacher: "李老师" ,schedule: "周一到周五，14:00-116:00",location: "A301教室"},
+      { id: 1, name: "软件工程", description: "1班", teacher: "周老师" ,schedule: "周一到周五，8:00-10:00",location: "A301教室"},
+      { id: 2, name: "软件工程", description: "2班", teacher: "周老师" ,schedule: "周一到周五，10:20-12:00",location: "A301教室"},
     ];
     const classDetail = allClasses.find((cls) => cls.id == id);
     if (classDetail) {
@@ -28,7 +27,19 @@ Page({
       console.error("未找到对应课程信息");
     }
   },
+  // 发起签到
+  initiateSignIn() {
+    wx.navigateTo({
+      url: `/pages/StartSignIn/StartSignIn?classId=${this.data.classId}`
+    });
+  },
 
+  // 查看签到情况
+  viewSignInStatus() {
+    wx.navigateTo({
+      url: `/pages/SignInStatus/SignInStatus?classId=${this.data.classId}`
+    });
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

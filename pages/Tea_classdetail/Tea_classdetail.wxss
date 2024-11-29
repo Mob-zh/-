@@ -1,0 +1,32 @@
+.page-container {
+  padding: 20rpx;
+}
+
+.class-info {
+
+  word-wrap: break-word; /* 自动换行 */
+  white-space: normal; /* 允许多行显示 */
+  margin-bottom: 20rpx;
+  flex:1;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 让容器高度填满屏幕 */
+  gap: 20rpx;
+}
+
+.btn {
+  background-color: #007aff;
+  color: #fff;
+  padding: 20rpx;
+  border-radius: 10rpx;
+  text-align: center;
+}

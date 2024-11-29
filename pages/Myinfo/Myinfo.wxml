@@ -23,11 +23,11 @@
 
   <!-- 虚拟tabbar -->
 <view class="bottom-nav">
-  <navigator url="/pages/Stu_choose/Stu_choose" class="nav-item">
+  <view class="nav-item" bindtap="navigateToHome">
     <image src="/image/home.png" class="icon"></image>
     <text>首页</text>
-  </navigator>
-  <navigator url="/pages/Stu_signin/Stu_signin" class="nav-item">
+  </view>
+  <navigator wx:if="{{userRole === 'student'}}"  url="/pages/Stu_signin/Stu_signin" class="nav-item">
     <image src="/image/签到.png" class="icon"></image>
     <text>快捷签到</text>
   </navigator>
