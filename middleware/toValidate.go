@@ -21,17 +21,29 @@ func ValidateJWT() gin.HandlerFunc {
 
 		// 解析 JWT
 		userId, role, err := utils.ParseJWT(parts[1])
-
 		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
 			ctx.Abort()
 			return
 		}
-
 		// 将 userId 、role 放到上下文中
-		ctx.Set("userId", userId)
+		ctx.Set("user_id", userId)
 		ctx.Set("role", role)
 
 		ctx.Next()
+	}
+}
+
+func ValidateRole(role string) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		roleFromContext := ctx.GetString("role")
+		if roleFromContext != role {
+			ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Insufficient permissions"})
+			ctx.Abort()
+			return
+
+		}
+		ctx.Next()
+
 	}
 }

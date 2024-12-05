@@ -88,7 +88,7 @@ func ChangePwd(ctx *gin.Context) {
 
 	// 根据上下文取参
 	role := ctx.GetString("role")
-	userId := ctx.GetString("userId")
+	userId := ctx.GetString("user_id")
 
 	// 根据角色选择模型和密码字段
 	if role == "student" {

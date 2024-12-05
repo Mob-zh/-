@@ -8,9 +8,9 @@ import (
 
 func GenerateJWT(userId string, role string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"userId": userId,
-		"role":   role,
-		"exp":    time.Now().Add(time.Hour * 7 * 24).Unix(),
+		"user_id": userId,
+		"role":    role,
+		"exp":     time.Now().Add(time.Hour * 7 * 24).Unix(),
 	})
 	// 签名密钥为"SZTU"
 	signedToken, err := token.SignedString([]byte("SZTU"))
@@ -28,7 +28,7 @@ func ParseJWT(tokenString string) (string, string, error) {
 		return "", "", err
 	}
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		return claims["userId"].(string), claims["role"].(string), nil
+		return claims["user_id"].(string), claims["role"].(string), nil
 	}
 	return "", "", errors.New("invalid token")
 

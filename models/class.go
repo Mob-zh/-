@@ -2,7 +2,6 @@ package models
 
 import (
 	"attendance_uniapp/initializer"
-	"gorm.io/gorm"
 	"time"
 )
 
@@ -25,6 +24,6 @@ type Class struct {
 	AttendanceRecords  []AttendanceRecord `gorm:"foreignKey:ClassId;constraint:OnDelete:CASCADE;" json:"attendance_records"` // 外键与级联删除
 }
 
-func CreateClass(db *gorm.DB, class *Class) error {
+func CreateClass(class *Class) error {
 	return initializer.DB.Create(class).Error
 }
