@@ -15,20 +15,21 @@ func SetupRouter() *gin.Engine {
 		//以下需验证JWT
 		student.Use(middleware.ValidateJWT())
 		{
+			//学生主页
+			student.GET("/home")
 			//学生修改密码
 			student.POST("/changePwd", controllers.ChangePwd)
+
+			class := student.Group("/<string:classId>")
 			{
-				class := student.Group("/<string:classId>")
-				{
-					//学生加入班级
-					class.POST("/join")
-					//学生退出班级
-					class.POST("/quit")
-					//学生获取班级信息
-					class.GET("/info")
-					//学生在该班级中进行签到操作
-					class.POST("/sign")
-				}
+				//学生加入班级
+				class.POST("/join")
+				//学生退出班级
+				class.POST("/quit")
+				//学生获取班级信息
+				class.GET("/info")
+				//学生在该班级中进行签到操作
+				class.POST("/sign")
 			}
 
 		}
@@ -40,6 +41,8 @@ func SetupRouter() *gin.Engine {
 		teacher.POST("/login", controllers.Login("teacher"))
 		teacher.Use(middleware.ValidateJWT())
 		{
+			//老师主页
+			teacher.GET("/home")
 			//老师修改密码
 			teacher.POST("/changePwd", controllers.ChangePwd)
 			class := teacher.Group("/<string:classId>")
