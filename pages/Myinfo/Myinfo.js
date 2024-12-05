@@ -31,6 +31,12 @@ Page({
     });
   },
 
+  changepasswd() {
+    wx.navigateTo({
+      url: '/pages/changepasswd/changepasswd' // 跳转到修改资料页面
+    });
+  },
+
   logout() {
     wx.showModal({
       title: "提示",

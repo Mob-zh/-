@@ -30,14 +30,14 @@ Page({
   // 发起签到
   initiateSignIn() {
     wx.navigateTo({
-      url: `/pages/StartSignIn/StartSignIn?classId=${this.data.classId}`
+      url: `/pages/Tea_StartSignIn/Tea_StartSignIn?classId=${this.data.classId}`
     });
   },
 
   // 查看签到情况
   viewSignInStatus() {
     wx.navigateTo({
-      url: `/pages/SignInStatus/SignInStatus?classId=${this.data.classId}`
+      url: `/pages/Tea_SignInStatus/Tea_SignInStatus?classId=${this.data.classId}`
     });
   },
   /**

@@ -1,0 +1,30 @@
+.changepasswd {
+  padding: 20px;
+}
+
+.input-container {
+  margin-bottom: 20rpx;
+}
+
+.label {
+  font-size: 16px;
+  margin-bottom: 10rpx;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10rpx;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 15rpx;
+  background-color: #007aff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+}

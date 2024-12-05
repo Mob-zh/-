@@ -16,7 +16,11 @@
      </view>
      <!-- 转换登录界面按钮 -->
      <view class="yisheng">
-       <navigator class="yisheng_navigator" url="/pages/login2/login2" style="position: relative; left: 60rpx; top: 456rpx"><text class='yisheng_txt'>我是老师</text></navigator>
+      <navigator class="yisheng_navigator" url="/pages/login2/login2" style="position: relative; left: 60rpx; top: 456rpx">
+       <text class='yisheng_txt'>我是老师</text>
+      </navigator>
+
+
      </view>
      <!-- 登录按钮 -->
      <view class="denglu">

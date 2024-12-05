@@ -4,7 +4,7 @@
     </input>
 </view>
 
-<button class="btn" type="primary" bindtap="goadmin">确认</button>
+<button class="btn" bindtap="goadmin">确认</button>
 
 <!-- 虚拟tabbar -->
 <view class="bottom-nav">

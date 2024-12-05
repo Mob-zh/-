@@ -16,5 +16,6 @@ App({
   globalData: {
     userInfo: null,
     userRole: "teacher",
+    userjwt: "123456"
   }
 })

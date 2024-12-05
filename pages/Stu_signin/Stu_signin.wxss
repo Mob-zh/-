@@ -12,6 +12,17 @@
   border: 3rpx solid ;
 }
 
+.btn{
+  width: 80%; /* 按钮占宽 */
+  background-color: #007aff;
+  color: #fff;
+  font-size: 32rpx;
+  padding: 16rpx;
+  border: none;
+  border-radius: 8rpx;
+  text-align: center;
+}
+
 /* pages/doc_choose/doc_choose.wxss */
 
 /* 底部导航栏 */

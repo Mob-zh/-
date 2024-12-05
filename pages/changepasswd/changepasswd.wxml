@@ -1,0 +1,23 @@
+<view class="changepasswd">
+  <!-- 原密码 -->
+  <view class="input-container">
+    <text class="label">原密码</text>
+    <input type="password" class="input-field" placeholder="请输入原密码" bindinput="handleInput" data-field="oldPassword" />
+  </view>
+
+  <!-- 新密码 -->
+  <view class="input-container">
+    <text class="label">新密码</text>
+    <input type="password" class="input-field" placeholder="请输入新密码" bindinput="handleInput" data-field="newPassword" />
+  </view>
+
+  <!-- 确认新密码 -->
+  <view class="input-container">
+    <text class="label">确认新密码</text>
+    <input type="password" class="input-field" placeholder="请确认新密码" bindinput="handleInput" data-field="confirmPassword" />
+  </view>
+
+
+  <!-- 提交按钮 -->
+  <button class="submit-btn" bind:tap="changePassword">提交</button>
+</view>

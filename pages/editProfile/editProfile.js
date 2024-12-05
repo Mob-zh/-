@@ -1,27 +1,13 @@
-// pages/Tea_choose.js
+// pages/editProfile/editProfile.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    classList: [
-      { id: 1, name: "软件工程", description: "1班" },
-      { id: 2, name: "软件工程", description: "2班" },
-    ]
+
   },
-  goToClassDetail(event) {
-    const classId = event.currentTarget.dataset.id;
-    console.log(classId);
-    wx.navigateTo({
-      url: `/pages/Tea_classdetail/Tea_classdetail?id=${classId}`
-    });
-  },
-  CreateClass() {
-    wx.navigateTo({
-      url: '/pages/createClass/createClass'
-    });
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */

@@ -2,10 +2,14 @@
   "pages": [
     "pages/login/login",
     "pages/login2/login2",
+    "pages/changepasswd/changepasswd",
+
     "pages/Tea_choose/Tea_choose",
     "pages/Tea_classdetail/Tea_classdetail",
     "pages/Tea_new_signin/Tea_new_signin",
     "pages/Tea_signin_detail/Tea_signin_detail",
+    "pages/Tea_StartSignIn/Tea_StartSignIn",
+    "pages/Tea_SignInStatus/Tea_SignInStatus",
 
     "pages/Stu_choose/Stu_choose",
     "pages/Stu_signin/Stu_signin",
@@ -13,6 +17,8 @@
     "pages/joinClass/joinClass",
     "pages/createClass/createClass",
     "pages/Myinfo/Myinfo",
+    "pages/editProfile/editProfile",
+    
     "pages/logs/logs"
   ],
   "window": {
