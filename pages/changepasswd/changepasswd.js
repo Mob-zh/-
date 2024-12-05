@@ -47,12 +47,11 @@ Page({
       newPassword: newPassword,
       repeated_new_pwd: newPassword
     };
+    
 
-
-  
     // 发送 POST 请求
     wx.request({
-      url: 'http://localhost:8080/student/changePwd',
+      url: 'http://localhost:8080/'+this.data.identity+'/changePwd',
       method: 'POST',
       header: {
         'Content-Type': 'application/json',
@@ -60,17 +59,17 @@ Page({
       },
       data: requestBody,
       success(res) {
-        if (res.data.success) {
+        const statusCode = res.statusCode;
+        if (statusCode === 200) {
           wx.showToast({
             title: '密码修改成功',
             icon: 'success',
           });
-          // 在这里处理服务器返回的数据
-
+          // 在这里处理后端返回的数据
 
         } else {
           wx.showToast({
-            title: res.data.message || '修改失败',
+            title: res.data.error || '修改失败',
             icon: 'none',
           });
         }
@@ -81,7 +80,6 @@ Page({
           icon: 'none',
         });
         console.error('请求失败:', error);
-        console.log(this.data.jwt);
       }
     });
   },
@@ -96,7 +94,7 @@ Page({
     const userRole = app.globalData.userRole;
     const userjwt = app.globalData.userjwt;
     this.setData({
-      identity: userRole === "teacher" ? "老师" : "学生", // 回显身份
+      identity: userRole, // 回显身份
       jwt: userjwt
     });
   },

@@ -1,6 +1,5 @@
 //index.js
 //获取应用实例
-const app = getApp()
 
 Page({
   data: {
@@ -9,15 +8,7 @@ Page({
     clientHeight:''
   },
   onLoad(){
-    var that=this
-    wx.getSystemInfo({ 
-      success: function (res) { 
-        console.log(res.windowHeight)
-          that.setData({ 
-              clientHeight:res.windowHeight
-        }); 
-      } 
-    }) 
+
   },
 
   goadmin() {
@@ -53,22 +44,22 @@ Page({
         pwd: password,
       },
       success(res) {
-        // 根据后端返回的结果处理
-        if (res.data.success) { 
+        const statusCode = res.statusCode;
+        if (statusCode===200) { 
           wx.showToast({
             title: '登录成功',
             icon: 'success',
           });
         const app = getApp(); // 获取全局 App 实例
         app.globalData.userjwt = res.data.token; 
-          
+        app.globalData.userRole = "student";
           // 跳转到 Stu_choose 页面
           wx.navigateTo({
             url: '/pages/Stu_choose/Stu_choose',
           });
         } else {
           wx.showToast({
-            title: res.data.message || '登录失败', // 假设后端返回 `message` 字段表示错误信息
+            title: res.data.error || '登录失败', // 假设后端返回 `message` 字段表示错误信息
             icon: 'none',
           });
         }
@@ -92,7 +83,5 @@ Page({
   password(e){
     this.data.password=e.detail.value
   },
-
-  
 })
  
