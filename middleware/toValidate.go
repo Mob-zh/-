@@ -1,6 +1,8 @@
 package middleware
 
 import (
+	"attendance_uniapp/initializer"
+	"attendance_uniapp/models"
 	"attendance_uniapp/utils"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -46,4 +48,29 @@ func ValidateRole(role string) gin.HandlerFunc {
 		ctx.Next()
 
 	}
+}
+
+func ValidateClassExist() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		classId := ctx.Param("class_id")
+		if err := initializer.DB.Where("class_id = ?", classId).First(&models.Class{}).Error; err != nil {
+			ctx.JSON(http.StatusNotFound, gin.H{"error": "Class not found"})
+			ctx.Abort()
+		}
+		ctx.Next()
+	}
+}
+
+func ValidateUserClassMatched(role string) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var isMatched bool
+		classId := ctx.Param("class_id")
+		isMatched = initializer.DB.Model(&models.Class{}).Select("1").Where(role+"_id = ? AND class_id = ?", ctx.GetString("user_id"), classId).Find(&isMatched).RowsAffected > 0
+		if !isMatched {
+			ctx.JSON(http.StatusForbidden, gin.H{"error": "您没有权限访问该班级"})
+			ctx.Abort()
+		}
+		ctx.Next()
+	}
+
 }

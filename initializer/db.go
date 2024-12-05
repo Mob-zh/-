@@ -9,7 +9,7 @@ import (
 
 var DB *gorm.DB
 
-func InitDB() {
+func initDB() *gorm.DB {
 	// TODO: 初始化数据库连接
 
 	dsn := GlobalConfig.Database.Dsn
@@ -24,5 +24,5 @@ func InitDB() {
 	sqlDB.SetMaxIdleConns(GlobalConfig.Database.MaxIdleConns)
 	sqlDB.SetMaxOpenConns(GlobalConfig.Database.MaxOpenConns)
 	sqlDB.SetConnMaxLifetime(time.Hour)
-	DB = db
+	return db
 }

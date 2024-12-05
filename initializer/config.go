@@ -27,7 +27,7 @@ type Config struct {
 }
 
 // InitConfig 加载并初始化配置
-func InitConfig() {
+func initConfig() {
 	//TODO: 初始化配置
 
 	viper.SetConfigName("config")        // 设置配置文件的名称和路径

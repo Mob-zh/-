@@ -1,6 +1,8 @@
 package initializer
 
 func Init() {
-	InitConfig()
-	InitDB()
+	initConfig()
+	initDB()
+	initRepositories()
+	initServices()
 }
