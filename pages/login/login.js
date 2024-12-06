@@ -34,7 +34,7 @@ Page({
   
     // 发送请求到后端
     wx.request({
-      url: 'http://localhost:8080/student/Login', // 后端接口地址
+      url: 'http://localhost:8080/student/login', // 后端接口地址
       method: 'POST',
       header: {
         'Content-Type': 'application/json',
