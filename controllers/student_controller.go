@@ -26,13 +26,14 @@ func (StudentCtrl *StudentController) StudentGetClassInfoHandler(ctx *gin.Contex
 	}
 	if queryForClass != nil {
 		ctx.JSON(http.StatusOK, gin.H{
-			"class_id":    queryForClass.ClassId,
-			"class_name":  queryForClass.ClassName,
-			"course_name": queryForClass.CourseName,
+			"class_name":   queryForClass.ClassName,
+			"course_name":  queryForClass.CourseName,
+			"teacher_name": queryForClass.TeacherName,
+			"class_time":   queryForClass.ClassTime,
+			"classroom":    queryForClass.Classroom,
 		})
 		return
 	}
-
 	ctx.JSON(http.StatusNotFound, gin.H{
 		"error": "未找到该班级",
 	})
@@ -89,4 +90,13 @@ func (StudentCtrl *StudentController) StudentQuitFromClassHandler(ctx *gin.Conte
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{"msg": "Class quit successfully"})
+}
+
+// StudentSigninHandler 学生签到操作
+func (StudentCtrl *StudentController) StudentSigninHandler(ctx *gin.Context) {
+	var input struct {
+		SigninTime string `json:"signin_time"`
+		ClassId    string `json:"class_id"`
+	}
+
 }

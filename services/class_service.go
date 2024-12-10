@@ -28,3 +28,7 @@ func (ClassServ *ClassService) GetStudentListByClassIdService(classId string) ([
 func (ClassServ *ClassService) GetClassListByStudentIdService(studentId string) ([]*models.Class, error) {
 	return ClassServ.ClassRepo.GetClassListByStudentId(studentId)
 }
+
+func (ClassServ *ClassService) DeleteClassByIdService(classId string) error {
+	return ClassServ.ClassRepo.DeleteClassById(classId)
+}

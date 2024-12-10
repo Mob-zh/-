@@ -33,3 +33,8 @@ func (*ClassRepository) GetClassListByStudentId(studentId string) ([]*models.Cla
 	var classes []*models.Class
 	return classes, initializer.DB.Table("student_classes").Select("classes.*").Joins("JOIN classes ON student_classes.class_id = classes.id").Where("student_classes.student_id = ?", studentId).Find(&classes).Error
 }
+
+func (ClassRepo *ClassRepository) DeleteClassById(classId string) error {
+	return initializer.DB.Where("class_id = ?", classId).Delete(&models.Class{}).Error
+
+}

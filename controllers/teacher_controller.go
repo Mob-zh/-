@@ -103,3 +103,25 @@ func (TeacherCtrl *TeacherController) TeacherGetClassStudentInfoHandler(ctx *gin
 		"student_name": studentListNames,
 	})
 }
+
+// 教师发起考勤
+func (TeacherCtrl *TeacherController) TeacherStartAttendanceHandler(ctx *gin.Context) {
+	classId := ctx.Param("class_id")
+	var input struct {
+		CheckingEndTime string `json:"checking_end_time"`
+	}
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "错误的请求数据"})
+	}
+
+}
+
+// 教师删除班级
+func (TeacherCtrl *TeacherController) TeacherDeleteClassHandler(ctx *gin.Context) {
+	classId := ctx.Param("class_id")
+	if err := TeacherCtrl.ClassServ.DeleteClassByIdService(classId); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "请检查您的网络并稍后再试"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"message": "删除成功"})
+}

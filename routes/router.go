@@ -59,11 +59,16 @@ func SetupRouter() *gin.Engine {
 				//老师创建班级
 				class.POST("/create", teacherCtrler.TeacherCreateClassHandler)
 				//老师删除班级
-				class.POST("/delete")
-				//老师获取班级信息
-				class.GET("/info")
+				class.POST("/delete", teacherCtrler.TeacherDeleteClassHandler)
+				//老师获取某一班级信息
+				class.GET("/info", teacherCtrler.TeacherGetClassInfoHandler)
 				//老师在该班级中进行考勤操作
 				class.POST("/sign")
+				{
+					class.POST("/sign/saveRecord")
+					class.POST("/sign/deleteRecord")
+
+				}
 				//老师在该班级中获取考勤记录
 				class.GET("/fetchRecord")
 				//老师手动补签(待定)
