@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"attendance_uniapp/initializer"
+	"attendance_uniapp/global"
 	"attendance_uniapp/models"
 	"attendance_uniapp/services"
 	"attendance_uniapp/utils"
@@ -117,7 +117,7 @@ func (*CommonController) ChangePwdHandler(ctx *gin.Context) {
 	}
 	// 更新密码
 	toUpdateHashedPwd, _ := utils.HashPassword(input.NewPwd)
-	if err := initializer.DB.Model(userModel).Update(role+"Pwd", toUpdateHashedPwd).Error; err != nil {
+	if err := global.DB.Model(userModel).Update(role+"Pwd", toUpdateHashedPwd).Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update password"})
 		return
 	}

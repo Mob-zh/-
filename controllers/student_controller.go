@@ -92,11 +92,11 @@ func (StudentCtrl *StudentController) StudentQuitFromClassHandler(ctx *gin.Conte
 	ctx.JSON(http.StatusOK, gin.H{"msg": "Class quit successfully"})
 }
 
-// StudentSigninHandler 学生签到操作
-func (StudentCtrl *StudentController) StudentSigninHandler(ctx *gin.Context) {
-	var input struct {
-		SigninTime string `json:"signin_time"`
-		ClassId    string `json:"class_id"`
-	}
-
-}
+//// StudentSigninHandler 学生签到操作
+//func (StudentCtrl *StudentController) StudentSigninHandler(ctx *gin.Context) {
+//	var input struct {
+//		SigninTime string `json:"signin_time"`
+//		ClassId    string `json:"class_id"`
+//	}
+//
+//}

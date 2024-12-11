@@ -1,10 +1,11 @@
 package main
 
 import (
+	"attendance_uniapp/global"
 	"attendance_uniapp/initializer"
 	"attendance_uniapp/models"
 	"fmt"
-	"github.com/bxcodec/faker/v3"
+	"github.com/go-faker/faker/v4"
 	"golang.org/x/crypto/bcrypt"
 	"log"
 	"math/rand"
@@ -63,12 +64,12 @@ func main() {
 	for index := range StudentFakeIds {
 		//随机二选一密码
 		randomIndex := rand.Intn(len(studentFakeHashedPwd))
-		initializer.DB.Create(&models.Student{StudentId: StudentFakeIds[index], StudentName: faker.ChineseName(), StudentPwd: studentFakeHashedPwd[randomIndex]})
+		global.DB.Create(&models.Student{StudentId: StudentFakeIds[index], StudentName: faker.ChineseName(), StudentPwd: studentFakeHashedPwd[randomIndex]})
 	}
 	for _, id := range TeacherFakeIds {
 		//随机二选一密码
 		randomIndex := rand.Intn(len(teacherFakeHashedPwd))
-		initializer.DB.Create(&models.Teacher{TeacherId: id, TeacherName: faker.ChineseName(), TeacherPwd: teacherFakeHashedPwd[randomIndex]})
+		global.DB.Create(&models.Teacher{TeacherId: id, TeacherName: faker.ChineseName(), TeacherPwd: teacherFakeHashedPwd[randomIndex]})
 	}
 
 	log.Println("Generate complete!")

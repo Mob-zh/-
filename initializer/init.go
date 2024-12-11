@@ -2,7 +2,8 @@ package initializer
 
 func Init() {
 	initConfig()
-	initDB()
+	initMysql()
+	initRedis()
 	initRepositories()
 	initServices()
 }

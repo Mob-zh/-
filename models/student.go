@@ -1,6 +1,8 @@
 package models
 
-import "attendance_uniapp/initializer"
+import (
+	"attendance_uniapp/global"
+)
 
 /*
 	学生表模型
@@ -15,7 +17,7 @@ type Student struct {
 
 func GetStudentById(studentId string) (*Student, error) {
 	student := &Student{}
-	if err := initializer.DB.Where("student_id=?", studentId).First(&student).Error; err != nil {
+	if err := global.DB.Where("student_id=?", studentId).First(&student).Error; err != nil {
 		return nil, err
 	}
 	return student, nil

@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"attendance_uniapp/initializer"
+	"attendance_uniapp/global"
 	"gorm.io/gorm"
 )
 
@@ -10,5 +10,5 @@ type AttendanceRepository struct {
 }
 
 func NewAttendanceRepository() *AttendanceRepository {
-	return &AttendanceRepository{DB: initializer.DB}
+	return &AttendanceRepository{DB: global.DB}
 }

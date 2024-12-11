@@ -1,7 +1,12 @@
 app:
   name: attendance_uniapp
   port: :8080
-database:
+mysql:
   dsn: root:xzyJJboom12138@tcp(127.0.0.1:3306)/attendance_uniapp?charset=utf8mb4&parseTime=True&loc=Local
   MaxIdleConns: 10
   MaxOpenConns: 100
+redis:
+  addr: "localhost:6379"
+  password: ""
+  timeout: 3000
+  db: 0

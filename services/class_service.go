@@ -7,9 +7,8 @@ import (
 
 // ClassService 封装班级相关的业务逻辑
 type ClassService struct {
-	ClassRepo      *repositories.ClassRepository
-	StudentRepo    *repositories.StudentRepository
-	TeacherService *repositories.TeacherRepository
+	ClassRepo   *repositories.ClassRepository
+	StudentRepo *repositories.StudentRepository
 }
 
 // NewClassService 返回一个 ClassService 实例

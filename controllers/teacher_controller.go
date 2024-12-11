@@ -104,17 +104,17 @@ func (TeacherCtrl *TeacherController) TeacherGetClassStudentInfoHandler(ctx *gin
 	})
 }
 
-// 教师发起考勤
-func (TeacherCtrl *TeacherController) TeacherStartAttendanceHandler(ctx *gin.Context) {
-	classId := ctx.Param("class_id")
-	var input struct {
-		CheckingEndTime string `json:"checking_end_time"`
-	}
-	if err := ctx.ShouldBindJSON(&input); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "错误的请求数据"})
-	}
-
-}
+//// 教师发起考勤
+//func (TeacherCtrl *TeacherController) TeacherCheckingAttendanceHandler(ctx *gin.Context) {
+//	classId := ctx.Param("class_id")
+//	var input struct {
+//		CheckingEndTime string `json:"checking_end_time"`
+//	}
+//	if err := ctx.ShouldBindJSON(&input); err != nil {
+//		ctx.JSON(http.StatusBadRequest, gin.H{"error": "错误的请求数据"})
+//	}
+//
+//}
 
 // 教师删除班级
 func (TeacherCtrl *TeacherController) TeacherDeleteClassHandler(ctx *gin.Context) {
