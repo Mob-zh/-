@@ -35,10 +35,10 @@
     <image src="/image/签到.png" class="icon"></image>
     <text>快捷签到</text>
   </navigator>
-  <navigator url="/pages/Myinfo/Myinfo"  class="nav-item">
+  <view class="nav-item">
     <image src="/image/signs_tap.png" class="icon"></image>
     <text>我的</text>
-  </navigator>
+  </view>
 </view>
 </view>
 

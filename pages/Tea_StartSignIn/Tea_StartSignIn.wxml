@@ -1,2 +1,30 @@
-<!--pages/Tea_StartSignIn/Tea_StartSignIn.wxml-->
-<text>pages/Tea_StartSignIn/Tea_StartSignIn.wxml</text>
+<view class="sign-in-page">
+  <!-- 班级信息 -->
+  <view class="class-info">
+    <text class="class-name">{{className}}</text>
+    <text class="class-description">{{classDescription}}</text>
+  </view>
+
+  <!-- 签到有效时间选择 -->
+  <view class="time-selector">
+    <picker mode="time" value="{{signInDuration}}" bindchange="onTimeChange">
+      <view class="picker">
+        签到有效时间: {{signInDuration}}
+      </view>
+    </picker>
+  </view>
+
+  <!-- 签到码显示框 -->
+  <view class="code-box">
+    <text class="code">{{signInCode}}</text>
+  </view>
+
+  <!-- 开始签到按钮 -->
+  <button class="start-button" bindtap="startSignIn" wx:if="{{!isSignInStarted}}">开始签到</button>
+
+  <!-- 签到结束提示 -->
+  <view class="sign-status" wx:if="{{isSignInStarted}}">
+    <text>当前签到人数: <text class="highlight">{{signInCount}}</text></text>
+    <text>剩余时间: <text class="highlight">{{remainingTime}} 秒</text></text>
+  </view>
+</view>

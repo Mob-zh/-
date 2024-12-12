@@ -12,10 +12,10 @@
     <image src="/image/home.png" class="icon"></image>
     <text>首页</text>
   </navigator>
-  <navigator url="/pages/Stu_signin/Stu_signin" class="nav-item">
+  <view class="nav-item">
     <image src="/image/签到_tap.png" class="icon"></image>
     <text>快捷签到</text>
-  </navigator>
+  </view>
   <navigator url="/pages/Myinfo/Myinfo"  class="nav-item">
     <image src="/image/signs.png" class="icon"></image>
     <text>我的</text>

@@ -12,9 +12,12 @@ Page({
   },
   goToClassDetail(event) {
     const classId = event.currentTarget.dataset.id;
+    const className = event.currentTarget.dataset.name;
+    const classDes = event.currentTarget.dataset.description;
+    
     console.log(classId);
     wx.navigateTo({
-      url: `/pages/Tea_classdetail/Tea_classdetail?id=${classId}`
+      url: `/pages/Tea_StartSignIn/Tea_StartSignIn?classId=${classId}&name=${className}&description=${classDes}`
     });
   },
   CreateClass() {

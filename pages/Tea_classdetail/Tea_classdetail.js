@@ -30,7 +30,7 @@ Page({
   // 发起签到
   initiateSignIn() {
     wx.navigateTo({
-      url: `/pages/Tea_StartSignIn/Tea_StartSignIn?classId=${this.data.classId}`
+      url: `/pages/Tea_StartSignIn/Tea_StartSignIn?classId=${classId}&name=${encodeURIComponent(name)}&description=${encodeURIComponent(description)}`
     });
   },
 
