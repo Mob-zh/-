@@ -8,8 +8,7 @@ Page({
     oldPassword: '', // 原密码
     newPassword: '', // 新密码
     confirmPassword: '', // 确认新密码
-
-    identity:"",
+    identity:"", //身份
     jwt:""
   },
   handleInput(e) {
@@ -51,11 +50,11 @@ Page({
 
     // 发送 POST 请求
     wx.request({
-      url: 'http://localhost:8080/'+this.data.identity+'/changePwd',
+      url: 'http://localhost:8080/'+this.data.identity+'/patch',
       method: 'POST',
       header: {
         'Content-Type': 'application/json',
-        'Authorition':this.data.jwt
+        'Authorization':this.data.jwt
       },
       data: requestBody,
       success(res) {
@@ -93,6 +92,7 @@ Page({
     const app = getApp();
     const userRole = app.globalData.userRole;
     const userjwt = app.globalData.userjwt;
+    console.log(userjwt);
     this.setData({
       identity: userRole, // 回显身份
       jwt: userjwt

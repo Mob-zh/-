@@ -17,7 +17,7 @@ Page({
     
     console.log(classId);
     wx.navigateTo({
-      url: `/pages/Tea_StartSignIn/Tea_StartSignIn?classId=${classId}&name=${className}&description=${classDes}`
+      url: `/pages/Tea_classdetail/Tea_classdetail?classId=${classId}`
     });
   },
   CreateClass() {
@@ -29,7 +29,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    
   },
 
   /**

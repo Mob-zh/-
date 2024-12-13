@@ -14,7 +14,8 @@ App({
     })
   },
   globalData: {
-    userInfo: null,
+    userid: "111111",
+    username: "李明",
     userRole: "teacher",
     userjwt: "123456"
   }

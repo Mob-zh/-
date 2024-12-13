@@ -1,19 +1,17 @@
 <view class="page-container">
   <!-- 用户信息部分 -->
   <view class="user-info">
-    <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
-    <text class="nickname">{{userInfo.nickName || "昵称"}}</text>
+    <image class="avatar" src="{{avatarUrl}}" mode="aspectFill"></image>
+    <text class="nickname">{{nickName || "昵称"}}</text>
     <text class="univercity">{{'深圳技术大学'}}</text>
-
-    <text class="phone">{{userInfo.phone || '绑定手机号后显示'}}</text>
+    <text class="univercity">{{userRole==="teacher" ? "老师" : "学生"}}</text>
+    
+    <text class="phone">{{userid}}</text>
   </view>
 
   <!-- 操作列表 -->
   <view class="action-list">
-    <view class="action-item" bindtap="editProfile">
-      <text>个人资料</text>
-      <text class="icon">›</text>
-    </view>
+
     <view class="action-item" bindtap="changepasswd">
       <text>修改密码</text>
       <text class="icon">›</text>

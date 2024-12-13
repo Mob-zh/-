@@ -5,12 +5,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: {
-      userRole: '' ,// 默认空值
-      avatarUrl: "/image/person.png", // 默认头像
-      nickName: "用户昵称",
-      phone: "" // 手机号
-    }
+    userRole: '' ,
+    avatarUrl: "/image/person.png", // 默认头像
+    nickName: "用户昵称",
+    userid: "" 
   },
 
   /**
@@ -19,10 +17,13 @@ Page({
   onLoad(options) {
     // 模拟从全局获取用户数据
     const app = getApp();
-    const userInfo = app.globalData.userInfo || {};
-    this.setData({ userInfo });
+    const userName = app.globalData.username;
+    const userId = app.globalData.userid;
+
     this.setData({
-      userRole: app.globalData.userRole // 赋值全局变量
+      userRole: app.globalData.userRole, // 赋值全局变量
+      nickName: userName,
+      userid: userId
     });
   },
   editProfile() {

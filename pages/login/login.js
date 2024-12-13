@@ -53,10 +53,15 @@ Page({
         const app = getApp(); // 获取全局 App 实例
         app.globalData.userjwt = res.data.token; 
         app.globalData.userRole = "student";
-          // 跳转到 Stu_choose 页面
-          wx.navigateTo({
-            url: '/pages/Stu_choose/Stu_choose',
-          });
+        app.globalData.userid = res.data.id;
+        app.globalData.username = res.data.name;
+        
+        console.log(app.globalData.userjwt)
+
+        // 跳转到 Stu_choose 页面
+        wx.navigateTo({
+          url: '/pages/Stu_choose/Stu_choose',
+        });
         } else {
           wx.showToast({
             title: res.data.error || '登录失败', // 假设后端返回 `message` 字段表示错误信息
@@ -73,6 +78,9 @@ Page({
         console.error('请求失败:', error);
       },
     });
+
+    
+
   },
   
 

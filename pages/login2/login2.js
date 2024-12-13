@@ -58,7 +58,11 @@ Page({
         const app = getApp(); // 获取全局 App 实例
         app.globalData.userjwt = res.data.token; 
         app.globalData.userRole = "teacher";
-          
+        app.globalData.userid = res.data.id;
+        app.globalData.username = res.data.name;
+
+        console.log(app.globalData.userjwt)
+
           // 跳转到 Stu_choose 页面
           wx.navigateTo({
             url: '/pages/Tea_choose/Tea_choose',

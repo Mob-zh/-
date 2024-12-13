@@ -1,8 +1,8 @@
 <view class="sign-in-page">
   <!-- 班级信息 -->
   <view class="class-info">
-    <text class="class-name">{{className}}</text>
-    <text class="class-description">{{classDescription}}</text>
+    <text class="class-name">{{classInfo.name}}</text>
+    <text class="class-description">{{classInfo.description}}</text>
   </view>
 
   <!-- 签到有效时间选择 -->

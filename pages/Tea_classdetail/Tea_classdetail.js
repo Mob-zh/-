@@ -13,7 +13,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    const id = options.id; // 获取传递的课程ID
+    const id = options.classId; // 获取传递的课程ID
+
     this.setData({ classId: id });
     // 模拟获取课程信息（可替换为接口请求）
     const allClasses = [
@@ -26,11 +27,14 @@ Page({
     } else {
       console.error("未找到对应课程信息");
     }
+
   },
   // 发起签到
-  initiateSignIn() {
+  initiateSignIn(event) {
+    const classId = this.data.classId; 
+    console.log(classId);
     wx.navigateTo({
-      url: `/pages/Tea_StartSignIn/Tea_StartSignIn?classId=${classId}&name=${encodeURIComponent(name)}&description=${encodeURIComponent(description)}`
+      url: `/pages/Tea_StartSignIn/Tea_StartSignIn?classId=${classId}`
     });
   },
 

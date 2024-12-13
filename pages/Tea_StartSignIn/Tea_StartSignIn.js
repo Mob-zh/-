@@ -5,8 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    className: "",  // 班级名称
-    classDescription: "",  // 班级描述
+    classInfo:{},
     signInDuration: "00:30",  // 默认签到有效时间30分钟
     signInCode: "------",  // 默认签到码
     isSignInStarted: false,  // 是否已开始签到
@@ -20,10 +19,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    this.setData({
-      className: options.name, // 获取传递的 classId 参数
-      classDescription: options.description, // 获取传递的 classId 参数
-    });
+    const id = options.classId; // 获取传递的课程ID
+
+    this.setData({ classId: id });
+    // 模拟获取课程信息（可替换为接口请求）
+    const allClasses = [
+      { id: 1, name: "软件工程", description: "1班", teacher: "周老师" ,schedule: "周一到周五，8:00-10:00",location: "A301教室"},
+      { id: 2, name: "软件工程", description: "2班", teacher: "周老师" ,schedule: "周一到周五，10:20-12:00",location: "A301教室"},
+    ];
+    const classDetail = allClasses.find((cls) => cls.id == id);
+    if (classDetail) {
+      this.setData({ classInfo: classDetail });
+    } else {
+      console.error("未找到对应课程信息");
+    }
+    console.log(this.data.classInfo);
   },
  // 签到有效时间变更时更新
  onTimeChange(e) {
