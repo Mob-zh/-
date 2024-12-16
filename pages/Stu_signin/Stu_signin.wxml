@@ -7,7 +7,8 @@
 <button class="btn" bindtap="goadmin">确认</button>
 
 <!-- 虚拟tabbar -->
-<view class="bottom-nav">
+<!-- 虚拟tabbar -->
+<view wx:if="{{!hideTabbar}}" class="bottom-nav">
   <navigator url="/pages/Stu_choose/Stu_choose" class="nav-item">
     <image src="/image/home.png" class="icon"></image>
     <text>首页</text>
@@ -16,8 +17,9 @@
     <image src="/image/签到_tap.png" class="icon"></image>
     <text>快捷签到</text>
   </view>
-  <navigator url="/pages/Myinfo/Myinfo"  class="nav-item">
+  <navigator url="/pages/Myinfo/Myinfo" class="nav-item">
     <image src="/image/signs.png" class="icon"></image>
     <text>我的</text>
   </navigator>
 </view>
+

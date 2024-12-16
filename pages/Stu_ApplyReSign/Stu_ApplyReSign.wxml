@@ -1,0 +1,18 @@
+<view class="apply-re-sign">
+  <text class="title">申请补签</text>
+  <view class="form">
+    <view class="form-item">
+      <text class="label">考勤日期：</text>
+      <text class="value">{{attendanceDate}}</text>
+    </view>
+    <view class="form-item">
+      <text class="label">出勤结果：</text>
+      <text class="value">{{attendanceResult}}</text>
+    </view>
+    <view class="form-item">
+      <text class="label">补签理由：</text>
+      <textarea placeholder="请输入补签理由" bindinput="onReasonInput" />
+    </view>
+    <button class="submit-btn" bindtap="submitReSign">提交申请</button>
+  </view>
+</view>

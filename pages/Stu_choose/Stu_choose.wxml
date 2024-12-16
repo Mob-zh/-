@@ -9,9 +9,9 @@
       <text class="class-description">{{item.description}}</text>
     </view>
   </block>
-  <view class="join-class-button">
+  <!-- <view class="join-class-button">
     <button class="add-class-btn" bindtap="joinClass">加入新的班级</button>
-  </view>
+  </view> -->
 </view>
 
 <view class="bottom-nav">

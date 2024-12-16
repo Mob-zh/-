@@ -1,0 +1,29 @@
+<view class="attendance-record">
+  <view class="table">
+    <!-- 表头 -->
+    <view class="table-header">
+      <text class="header-item">考勤日期</text>
+      <text class="header-item">出勤结果</text>
+      <text class="header-item">操作</text>
+    </view>
+
+    <!-- 表格内容 -->
+    <view class="table-row" wx:for="{{records}}" wx:key="id">
+      <text class="row-item">{{item.date}}</text>
+      <!-- 根据出勤结果动态设置字体颜色 -->
+      <text class="row-item {{item.result === '出勤' ? 'present' : 'absent'}}">
+        {{item.result}}
+      </text>
+      <view class="row-item">
+        <!-- 仅在未出勤时显示补签操作 -->
+        <view 
+          class="apply-view" 
+          wx:if="{{item.result === '未出勤'}}" 
+          bindtap="applyReSign" 
+          data-date="{{item.date}}">
+          补签
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

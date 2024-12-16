@@ -37,8 +37,11 @@ Page({
   },
  // 签到有效时间变更时更新
  onTimeChange(e) {
+  const [minutes, seconds] = e.detail.value.split(':').map(Number); // 分割并转换为数字
+  const res = minutes * 60 + seconds; // 计算总秒数
   this.setData({
-    signInDuration: e.detail.value
+    signInDuration: e.detail.value,
+    remainingTime:res
   });
 },
 
@@ -52,9 +55,9 @@ startSignIn() {
   // 启动倒计时
   this.startCountdown();
 
-  // 模拟签到人数，通常此部分数据来自服务器
+  // 模拟签到人数，此部分数据来自服务器
   this.setData({
-    signInCount: 5  // 假设已经有5人签到
+    signInCount: 0  // 假设已经有5人签到
   });
 
   // 模拟签到成功，设置签到码

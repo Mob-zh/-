@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    jwt:'',
     classList: [
       { id: 1, name: "软件工程", description: "1班" },
       { id: 2, name: "软件工程", description: "2班" },
@@ -12,8 +13,6 @@ Page({
   },
   goToClassDetail(event) {
     const classId = event.currentTarget.dataset.id;
-    const className = event.currentTarget.dataset.name;
-    const classDes = event.currentTarget.dataset.description;
     
     console.log(classId);
     wx.navigateTo({
@@ -25,11 +24,52 @@ Page({
       url: '/pages/createClass/createClass'
     });
   },
+
+  /**
+   * 请求服务器获取班级列表
+   */
+  fetchClassList() {
+    const that = this; // 保存上下文
+    wx.request({
+      url: "http://localhost:8080/teacher/home", // 替换为你的 API 地址
+      method: "GET",
+      header: {
+        "Content-Type": "application/json",
+        "Authorization": this.data.jwt
+      },
+      success(res) {
+        if (res.statusCode === 200 && res.data) {
+          console.log("获取班级列表成功:", res.data);
+          that.setData({
+            classList: res.data // 假设 API 返回的是一个班级数组
+          });
+        } else {
+          console.error("获取班级列表失败:", res);
+          wx.showToast({
+            title: "获取班级列表失败",
+            icon: "none"
+          });
+        }
+      },
+      fail(err) {
+        console.error("请求失败:", err);
+        wx.showToast({
+          title: "请求失败",
+          icon: "none"
+        });
+      }
+    });
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    
+    const app = getApp();
+    this.setData({
+      jwt: app.globalData.userjwt
+    })
+    this.fetchClassList();
   },
 
   /**

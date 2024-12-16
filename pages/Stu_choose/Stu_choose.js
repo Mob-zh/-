@@ -7,8 +7,8 @@ Page({
   data: {
     classList: [
       { id: 1, name: "软件工程", description: "2024年秋1班" },
-      { id: 2, name: "编译原理", description: "2024年秋1班" },
-      { id: 3, name: "数据结构", description: "2023年秋1班" }
+      { id: 3, name: "编译原理", description: "2024年秋1班" },
+      { id: 4, name: "数据结构", description: "2024年秋1班" }
     ]
   },
   goToClassDetail(event) {

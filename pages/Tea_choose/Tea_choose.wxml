@@ -9,9 +9,9 @@
       <text class="class-description">{{item.description}}</text>
     </view>
   </block>
-  <view class="create-class-button">
+  <!-- <view class="create-class-button">
     <button class="create-class-btn" bindtap="CreateClass">创建新的班级</button>
-  </view>
+  </view> -->
 </view>
 
 <view class="bottom-nav">

@@ -7,3 +7,18 @@
   font-weight: bold;
   margin-bottom: 16rpx;
 }
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 让容器高度填满屏幕 */
+  gap: 20rpx;
+}
+
+.btn {
+  background-color: #007aff;
+  color: #fff;
+  padding: 20rpx;
+  border-radius: 10rpx;
+  text-align: center;
+}

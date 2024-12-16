@@ -18,8 +18,8 @@ Page({
     // 模拟获取班级详情
     const allClasses = [
       { id: 1, name: "软件工程", description: "2024年秋1班", teacher: "周老师" ,schedule: "周一到周五，8:00-10:00",location: "A301教室"},
-      { id: 2, name: "编译原理", description: "2024年秋", teacher: "袁老师" ,schedule: "周一到周五，10:20-12:00",location: "A301教室"},
-      { id: 3, name: "数据结构", description: "2023年秋", teacher: "李老师" ,schedule: "周一到周五，14:00-116:00",location: "A301教室"},
+      { id: 3, name: "编译原理", description: "2024年秋", teacher: "袁老师" ,schedule: "周一到周五，10:20-12:00",location: "A301教室"},
+      { id: 4, name: "数据结构", description: "2024年秋", teacher: "李老师" ,schedule: "周一到周五，14:00-116:00",location: "A301教室"},
     ];
     const classDetail = allClasses.find((cls) => cls.id == id);
     if (classDetail) {
@@ -27,6 +27,22 @@ Page({
     } else {
       console.error("未找到对应课程信息");
     }
+  },
+
+  SignIn(){
+    const classId = this.data.classId; 
+    console.log(classId);
+    wx.navigateTo({
+      url: `/pages/Stu_signin/Stu_signin?classId=${classId}&hideTabbar=true`
+    });
+  },
+
+  AttendanceRecord(){
+    const classId = this.data.classId; 
+    console.log(classId);
+    wx.navigateTo({
+      url: `/pages/Stu_AttendanceRecord/Stu_AttendanceRecord?classId=${classId}`
+    });
   },
 
   /**

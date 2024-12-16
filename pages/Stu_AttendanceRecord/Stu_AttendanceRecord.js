@@ -1,39 +1,25 @@
-// pages/Tea_SignInStatus/Tea_SignInStatus.js
+// pages/Stu_AttendanceRecord/Stu_AttendanceRecord.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    students: [
-      {  "name": "张三", "studentId": "2021001", "signedInCount": 8, "totalSignIn": 10 },
-      {  "name": "李四", "studentId": "2021002", "signedInCount": 9, "totalSignIn": 10 },
-      {  "name": "王五", "studentId": "2021003", "signedInCount": 10, "totalSignIn": 10 }
-    ],
-
+    records: [
+      { "date": "2024-12-01", "result": "出勤" },
+      { "date": "2024-12-02", "result": "未出勤" },
+      { "date": "2024-12-03", "result": "出勤" },
+      { "date": "2024-12-04", "result": "未出勤" }
+    ]
   },
 
   /**
-   * 生命周期函数--监听页面加载
+   * 获取考勤记录
    */
-  onLoad(options) {
-    const classId = options.classId; // 获取传入的班级ID
-    this.fetchStudentSignInData(classId);
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
-  },
-/**
-   * 获取学生签到情况数据
-   */
-  fetchStudentSignInData(classId) {
+  fetchAttendanceRecords() {
     const app = getApp(); // 假设JWT存储在全局变量中
     wx.request({
-      url: `http://localhost:8080/api/getSignInStatus?classId=${classId}`, // 替换为后端API地址
+      url: "http://localhost:8080/api/student/attendanceRecords", // 替换为实际后端接口
       method: "GET",
       header: {
         "Content-Type": "application/json",
@@ -42,11 +28,11 @@ Page({
       success: (res) => {
         if (res.statusCode === 200 && res.data) {
           this.setData({
-            students: res.data.students // 假设返回数据格式为 { students: [...] }
+            attendanceRecords: res.data.records // 假设返回数据格式为 { records: [...] }
           });
         } else {
           wx.showToast({
-            title: "获取数据失败",
+            title: "获取考勤数据失败",
             icon: "none"
           });
         }
@@ -60,6 +46,32 @@ Page({
       }
     });
   },
+
+  /**
+   * 申请补签
+   */
+  applyReSign(e) {
+    const date = e.currentTarget.dataset.date;
+    console.log(date);
+    wx.navigateTo({
+      url: `/pages/Stu_ApplyReSign/Stu_ApplyReSign?date=${date}`
+    });
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad(options) {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {
+
+  },
+
   /**
    * 生命周期函数--监听页面显示
    */

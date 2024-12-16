@@ -5,14 +5,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    hideTabbar: false // 控制 tabbar 显示隐藏
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+      // 如果页面参数中存在 hideTabbar 参数且为 true，则隐藏 tabbar
+      if (options.hideTabbar === "true") {
+        this.setData({
+          hideTabbar: true
+        });
+      }
   },
 
   /**

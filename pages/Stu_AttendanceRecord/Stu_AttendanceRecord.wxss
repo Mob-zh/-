@@ -1,0 +1,43 @@
+.attendance-record {
+  margin: 10px;
+}
+
+.table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-header, .table-row {
+  display: table-row;
+}
+
+.header-item, .row-item {
+  display: table-cell;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.row-item.present {
+  color: green; /* 出勤字体为绿色 */
+  font-weight: bold;
+}
+
+.row-item.absent {
+  color: red; /* 未出勤字体为红色 */
+  font-weight: bold;
+}
+
+.apply-view {
+  display: inline-block;
+  padding: 2px 5px;
+  background-color: #007acc;
+  color: white;
+  border-radius: 3px;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+  width: 100%; /* 宽度适应表格单元格 */
+  box-sizing: border-box;
+}

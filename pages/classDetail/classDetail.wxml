@@ -14,4 +14,11 @@
     <view>
       <text>课程地点: {{classInfo.location}}</text>
     </view>
+    
+    <view class="actions">
+      <button class="btn" bindtap="SignIn">签到</button>
+      <button class="btn" bindtap="AttendanceRecord">我的考勤记录</button>
+
+    </view>
+
 </view>

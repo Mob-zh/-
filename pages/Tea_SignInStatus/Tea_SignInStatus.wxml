@@ -1,2 +1,26 @@
-<!--pages/Tea_SignInStatus/Tea_SignInStatus.wxml-->
-<text>pages/Tea_SignInStatus/Tea_SignInStatus.wxml</text>
+<view class="sign-in-status-page">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="title">学生签到情况</text>
+  </view>
+
+  <!-- 表格标题 -->
+  <view class="table-header">
+    <text class="header-item">姓名</text>
+    <text class="header-item">学号</text>
+    <text class="header-item">签到次数</text>
+    <text class="header-item">总签到次数</text>
+  </view>
+
+  <!-- 表格内容 -->
+  <view class="table-content">
+    <block wx:for="{{students}}" wx:key="id">
+      <view class="table-row">
+        <text class="row-item">{{item.name}}</text>
+        <text class="row-item">{{item.studentId}}</text>
+        <text class="row-item">{{item.signedInCount}}</text>
+        <text class="row-item">{{item.totalSignIn}}</text>
+      </view>
+    </block>
+  </view>
+</view>
