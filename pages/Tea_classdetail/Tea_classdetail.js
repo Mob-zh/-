@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    jwt:"",
     classId: null, // 课程ID
     classInfo: {}, // 课程详细信息
   },
@@ -14,21 +15,50 @@ Page({
    */
   onLoad(options) {
     const id = options.classId; // 获取传递的课程ID
-
+    const app = getApp();
+    this.setData({
+      jwt: app.globalData.userjwt
+    })
     this.setData({ classId: id });
-    // 模拟获取课程信息（可替换为接口请求）
-    const allClasses = [
-      { id: 1, name: "软件工程", description: "1班", teacher: "周老师" ,schedule: "周一到周五，8:00-10:00",location: "A301教室"},
-      { id: 2, name: "软件工程", description: "2班", teacher: "周老师" ,schedule: "周一到周五，10:20-12:00",location: "A301教室"},
-    ];
-    const classDetail = allClasses.find((cls) => cls.id == id);
-    if (classDetail) {
-      this.setData({ classInfo: classDetail });
-    } else {
-      console.error("未找到对应课程信息");
-    }
+    
+    this.fetchClassDetail();
 
   },
+
+  fetchClassDetail(){
+    const that = this; // 保存上下文
+    wx.request({
+      url: "http://localhost:8080/teacher/"+this.data.classId+"/info", // 替换为你的 API 地址
+      method: "GET",
+      header: {
+        "Content-Type": "application/json",
+        "Authorization": this.data.jwt
+      },
+      success(res) {
+        if (res.statusCode === 200 && res.data) {
+          console.log("获取班级详情成功:", res.data);
+          that.setData({
+            classInfo: res.data // 假设 API 返回的是一个班级数组
+          });
+          //console.log(this.data.classList);
+        } else {
+          console.error("获取班级详情失败:", res);
+          wx.showToast({
+            title: "获取班级详情失败",
+            icon: "none"
+          });
+        }
+      },
+      fail(err) {
+        console.error("请求失败:", err);
+        wx.showToast({
+          title: "请求失败",
+          icon: "none"
+        });
+      }
+    });
+  },
+
   // 发起签到
   initiateSignIn(event) {
     const classId = this.data.classId; 

@@ -6,6 +6,7 @@ Page({
    */
   data: {
     classInfo:{},
+    classId:"",
     signInDuration: "00:30",  // 默认签到有效时间30分钟
     signInCode: "------",  // 默认签到码
     isSignInStarted: false,  // 是否已开始签到
@@ -20,20 +21,48 @@ Page({
    */
   onLoad(options) {
     const id = options.classId; // 获取传递的课程ID
-
+    const app = getApp();
+    this.setData({
+      jwt: app.globalData.userjwt
+    })
     this.setData({ classId: id });
-    // 模拟获取课程信息（可替换为接口请求）
-    const allClasses = [
-      { id: 1, name: "软件工程", description: "1班", teacher: "周老师" ,schedule: "周一到周五，8:00-10:00",location: "A301教室"},
-      { id: 2, name: "软件工程", description: "2班", teacher: "周老师" ,schedule: "周一到周五，10:20-12:00",location: "A301教室"},
-    ];
-    const classDetail = allClasses.find((cls) => cls.id == id);
-    if (classDetail) {
-      this.setData({ classInfo: classDetail });
-    } else {
-      console.error("未找到对应课程信息");
-    }
-    console.log(this.data.classInfo);
+    
+    this.fetchClassDetail();
+
+  },
+
+  fetchClassDetail(){
+    const that = this; // 保存上下文
+    wx.request({
+      url: "http://localhost:8080/teacher/"+this.data.classId+"/info", // 替换为你的 API 地址
+      method: "GET",
+      header: {
+        "Content-Type": "application/json",
+        "Authorization": this.data.jwt
+      },
+      success(res) {
+        if (res.statusCode === 200 && res.data) {
+          console.log("获取班级详情成功:", res.data);
+          that.setData({
+            classInfo: res.data // 假设 API 返回的是一个班级数组
+          });
+          //console.log(this.data.classList);
+        } else {
+          console.error("获取班级详情失败:", res);
+          wx.showToast({
+            title: "获取班级详情失败",
+            icon: "none"
+          });
+        }
+      },
+      fail(err) {
+        console.error("请求失败:", err);
+        wx.showToast({
+          title: "请求失败",
+          icon: "none"
+        });
+      }
+    });
   },
 
  // 签到有效时间变更时更新
@@ -48,31 +77,30 @@ Page({
 
  // 启动签到
  startSignIn() {
-  const { classId } = this.data; // 假设班级 ID 存储在 data 中
-
+  const remainingTime = this.data.remainingTime;
+  console.log(remainingTime);
   // 向后端请求签到码
   wx.request({
-    url: `http://localhost:8080/api/startSignIn`, // 替换为实际接口
+    url: `http://localhost:8080/teacher/`+this.data.classId+`/sign/start`, // 替换为实际接口
     method: "POST",
     header: {
-      'Authorization': app.globalData.jwt, // 添加用户凭证
+      'Authorization': this.data.jwt, // 添加用户凭证
       'Content-Type': 'application/json'
     },
     data: {
-      classId: classId
+       'checking_seconds':remainingTime
     },
     success: (res) => {
-      if (res.statusCode === 200 && res.data.signInCode) {
+      if (res.statusCode === 200 && res.data.sign_in_code) {
         // 将返回的签到码存储到全局变量和页面数据
-        const newSignInCode = res.data.signInCode;
-        app.globalData.currentSignInCode = newSignInCode;
+        const newSignInCode = res.data.sign_in_code;
 
         // 设置页面数据
         this.setData({
           isSignInStarted: true,
           signInCode: newSignInCode,
           signInCount: 0, // 重置签到人数
-          remainingTime: 60 // 重置倒计时
+          remainingTime: remainingTime // 重置倒计时
         });
 
         // 启动倒计时
@@ -87,6 +115,43 @@ Page({
     fail: (err) => {
       wx.showToast({
         title: "网络错误，无法发起签到",
+        icon: "none"
+      });
+      console.error(err);
+    }
+  });
+},
+// 启动签到
+checkSignInNum() {
+
+  // 向后端请求签到码
+  wx.request({
+    url: `http://localhost:8080/teacher/`+this.data.classId+`/sign/count`, // 替换为实际接口
+    method: "GET",
+    header: {
+      'Authorization': this.data.jwt, // 添加用户凭证
+      'Content-Type': 'application/json'
+    },
+    success: (res) => {
+      if (res.statusCode === 200) {
+        // 将返回的签到码存储到全局变量和页面数据
+        const newSignInCount = res.data.signed_in_count;
+
+        // 设置页面数据
+        this.setData({
+          signInCount: newSignInCount, // 重置签到人数
+        });
+
+      } else {
+        wx.showToast({
+          title: res.data.message,
+          icon: "none"
+        });
+      }
+    },
+    fail: (err) => {
+      wx.showToast({
+        title: "网络错误,获取签到人数失败",
         icon: "none"
       });
       console.error(err);
@@ -113,6 +178,7 @@ startCountdown() {
       // 重置页面状态
       this.resetPageState();
     } else {
+      this.checkSignInNum();
       this.setData({
         remainingTime: this.data.remainingTime - 1
       });

@@ -3,7 +3,7 @@
     <text class="header-title">我的班级</text>
   </view>
 <view class="class-list">
-  <block wx:for="{{classList}}" wx:key="id">
+  <block wx:for="{{classList.classes}}" wx:key="id">
     <view class="class-item" bindtap="goToClassDetail" data-id="{{item.class_id}}" data-name="{{item.class_name}}" data-description = "{{item.class_time}}">
       <text class="class-name">{{item.class_name}}</text>
       <text class="class-description">{{item.class_time}}</text>

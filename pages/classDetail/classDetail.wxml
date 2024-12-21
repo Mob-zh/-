@@ -1,19 +1,15 @@
 <view class="class-info">
-  <view>
-      <text class="title">{{classInfo.name}} - {{classInfo.description}} </text>
+
+    <view>
+      <text>班级号: {{classId}}</text>
     </view>
     <view>
-      <text>课程号: {{classInfo.id}}</text>
+      <text>班级: {{classInfo.class_name}}</text>
     </view>
     <view>
-      <text>授课老师: {{classInfo.teacher}}</text>
+      <text>课程时间: {{classInfo.class_time}}</text>
     </view>
-    <view>
-      <text>课程时间: {{classInfo.schedule}}</text>
-    </view>
-    <view>
-      <text>课程地点: {{classInfo.location}}</text>
-    </view>
+
     
     <view class="actions">
       <button class="btn" bindtap="SignIn">签到</button>

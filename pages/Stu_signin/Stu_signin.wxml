@@ -1,10 +1,10 @@
 
 <view class="sign_in">
-    <input type="text" required="required" placeholder="请输入签到码" >
+    <input type="text" required="required" bindinput="handleInput" placeholder="请输入签到码" >
     </input>
 </view>
 
-<button class="btn" bindtap="goadmin">确认</button>
+<button class="btn" bindtap="signIn" >确认</button>
 
 <!-- 虚拟tabbar -->
 <!-- 虚拟tabbar -->

@@ -7,7 +7,7 @@
      <!-- 手机号 -->
      <view class="phoneCs">
        <image src="../../image/person.png" class="ph"></image>
-       <input placeholder="请输入账号" type="number" bindinput="bed" />
+       <input placeholder="请输入账号" bindinput="bed" />
      </view>
      <!-- 密码 -->
      <view class="passwordCs">
