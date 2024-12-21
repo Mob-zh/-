@@ -1,0 +1,28 @@
+<view class="sign-in-detail-page">
+  <!-- 页面标题 -->
+  <view class="title">签到详情</view>
+
+  <!-- 班级签到列表 -->
+  <view class="student-list">
+    <block wx:for="{{studentRecords}}" wx:key="id">
+      <view class="student-item">
+        <view class="student-info">
+          <text class="student-name">{{item.name}}</text>
+          <text class="student-id">{{item.studentId}}</text>
+          <text class="student-status" style="color: {{item.status === '未出勤' ? 'red' : 'green'}};">
+            {{item.status}}
+          </text>
+        </view>
+        <!-- 手动补签按钮 -->
+        <view 
+          wx:if="{{item.status === '未出勤'}}" 
+          class="makeup-sign-button"
+          bindtap="makeupSignIn" 
+          data-student-id="{{item.studentId}}" 
+        >
+          补签
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

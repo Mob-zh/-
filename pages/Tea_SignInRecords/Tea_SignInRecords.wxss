@@ -1,0 +1,47 @@
+.sign-in-records-page {
+  padding: 20px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.record-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.record-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.record-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.record-date {
+  font-size: 16px;
+  color: #333;
+}
+
+.record-time {
+  font-size: 14px;
+  color: #666;
+}
+
+.record-status {
+  font-size: 14px;
+  color: green;
+}

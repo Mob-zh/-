@@ -1,0 +1,54 @@
+.sign-in-detail-page {
+  padding: 20px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.student-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.student-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.student-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.student-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.student-id {
+  font-size: 14px;
+  color: #666;
+}
+
+.student-status {
+  font-size: 14px;
+}
+
+.makeup-sign-button {
+  padding: 5px 10px;
+  background-color: #007acc;
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  text-align: center;
+}

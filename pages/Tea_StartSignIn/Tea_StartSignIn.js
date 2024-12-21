@@ -35,6 +35,7 @@ Page({
     }
     console.log(this.data.classInfo);
   },
+
  // 签到有效时间变更时更新
  onTimeChange(e) {
   const [minutes, seconds] = e.detail.value.split(':').map(Number); // 分割并转换为数字
@@ -45,24 +46,51 @@ Page({
   });
 },
 
-// 启动签到
-startSignIn() {
-  // 隐藏开始签到按钮
-  this.setData({
-    isSignInStarted: true
-  });
+ // 启动签到
+ startSignIn() {
+  const { classId } = this.data; // 假设班级 ID 存储在 data 中
 
-  // 启动倒计时
-  this.startCountdown();
+  // 向后端请求签到码
+  wx.request({
+    url: `http://localhost:8080/api/startSignIn`, // 替换为实际接口
+    method: "POST",
+    header: {
+      'Authorization': app.globalData.jwt, // 添加用户凭证
+      'Content-Type': 'application/json'
+    },
+    data: {
+      classId: classId
+    },
+    success: (res) => {
+      if (res.statusCode === 200 && res.data.signInCode) {
+        // 将返回的签到码存储到全局变量和页面数据
+        const newSignInCode = res.data.signInCode;
+        app.globalData.currentSignInCode = newSignInCode;
 
-  // 模拟签到人数，此部分数据来自服务器
-  this.setData({
-    signInCount: 0  // 假设已经有5人签到
-  });
+        // 设置页面数据
+        this.setData({
+          isSignInStarted: true,
+          signInCode: newSignInCode,
+          signInCount: 0, // 重置签到人数
+          remainingTime: 60 // 重置倒计时
+        });
 
-  // 模拟签到成功，设置签到码
-  this.setData({
-    signInCode: this.generateSignInCode()
+        // 启动倒计时
+        this.startCountdown();
+      } else {
+        wx.showToast({
+          title: res.data.message || "无法获取签到码",
+          icon: "none"
+        });
+      }
+    },
+    fail: (err) => {
+      wx.showToast({
+        title: "网络错误，无法发起签到",
+        icon: "none"
+      });
+      console.error(err);
+    }
   });
 },
 
@@ -71,10 +99,19 @@ startCountdown() {
   const timer = setInterval(() => {
     if (this.data.remainingTime <= 0) {
       clearInterval(timer); // 停止计时
+      this.setData({ timer: null }); // 清空定时器
+
+      // 清空全局签到码
+      app.globalData.currentSignInCode = null;
+
+      // 提示签到已结束
       wx.showToast({
         title: "签到已结束",
         icon: "none"
       });
+
+      // 重置页面状态
+      this.resetPageState();
     } else {
       this.setData({
         remainingTime: this.data.remainingTime - 1
@@ -85,9 +122,14 @@ startCountdown() {
   this.setData({ timer });
 },
 
-// 生成六位签到码
-generateSignInCode() {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+// 重置页面状态
+resetPageState() {
+  this.setData({
+    isSignInStarted: false,
+    signInCode: "",
+    signInCount: 0,
+    remainingTime: 60
+  });
 },
 
 // 页面卸载时清理定时器

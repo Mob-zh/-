@@ -1,0 +1,17 @@
+<view class="sign-in-records-page">
+  <!-- 页面标题 -->
+  <view class="title">签到记录</view>
+
+  <!-- 签到记录列表 -->
+  <view class="record-list">
+    <block wx:for="{{records}}" wx:key="id">
+      <view class="record-item" bindtap="goToSignInDetail" data-id="{{item.id}}">
+        <view class="record-info">
+          <text class="record-date">{{item.date}}</text>
+          <text class="record-time">{{item.time}}</text>
+        </view>
+        <view class="record-status">{{item.status}}</view>
+      </view>
+    </block>
+  </view>
+</view>

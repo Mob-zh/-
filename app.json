@@ -8,6 +8,9 @@
     "pages/Tea_classdetail/Tea_classdetail",
     "pages/Tea_StartSignIn/Tea_StartSignIn",
     "pages/Tea_SignInStatus/Tea_SignInStatus",
+    "pages/Tea_SignInRecords/Tea_SignInRecords",
+    "pages/Tea_SignInDetail/Tea_SignInDetail",
+
 
     "pages/Stu_choose/Stu_choose",
     "pages/Stu_signin/Stu_signin",

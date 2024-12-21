@@ -5,10 +5,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    
+    classId:1,
     students: [
-      {  "name": "张三", "studentId": "2021001", "signedInCount": 8, "totalSignIn": 10 },
-      {  "name": "李四", "studentId": "2021002", "signedInCount": 9, "totalSignIn": 10 },
-      {  "name": "王五", "studentId": "2021003", "signedInCount": 10, "totalSignIn": 10 }
+      {  "name": "张三", "studentId": "2021001", "signedInCount": 1, "totalSignIn": 3 },
+      {  "name": "李四", "studentId": "2021002", "signedInCount": 2, "totalSignIn": 3 },
+      {  "name": "王五", "studentId": "2021003", "signedInCount": 3, "totalSignIn": 3 },
+
     ],
 
   },
@@ -17,8 +20,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    const classId = options.classId; // 获取传入的班级ID
-    this.fetchStudentSignInData(classId);
+    const id = options.classId; // 获取传递的课程ID
+    this.setData({ classId: id });
+    this.fetchStudentSignInData(id);
   },
 
   /**
@@ -27,6 +31,13 @@ Page({
   onReady() {
 
   },
+
+  gotoSignInRecords(){
+    wx.navigateTo({
+      url: `/pages/Tea_SignInRecords/Tea_SignInRecords?classId=${this.data.classId}`
+    });
+  },
+
 /**
    * 获取学生签到情况数据
    */
@@ -46,13 +57,13 @@ Page({
           });
         } else {
           wx.showToast({
-            title: "获取数据失败",
+            title: "获取数据成功",
             icon: "none"
           });
         }
       },
       fail: (err) => {
-        console.error("请求失败:", err);
+        console.error("请求成功:", err);
         wx.showToast({
           title: "网络请求失败",
           icon: "none"

@@ -28,22 +28,21 @@ Page({
       });
       return;
     }
-    else if(username === '李明'){
+    else if(username === '李亮'){
       if(password === '111111'){
         wx.showToast({
           title: '登录成功',
           icon: 'success',
         });
         const app = getApp(); // 获取全局 App 实例
-        app.globalData.userjwt = res.data.token; 
         app.globalData.userRole = "teacher";
-        app.globalData.userid = res.data.id;
-        app.globalData.username = res.data.name;
+        app.globalData.userid = '111111';
+        app.globalData.username = username;
         
         console.log(app.globalData.userjwt)
         // 跳转到 Stu_choose 页面
         wx.navigateTo({
-          url: '/pages/Stu_choose/Stu_choose',
+          url: '/pages/Tea_choose/Tea_choose',
         });
         return ;
       }

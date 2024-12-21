@@ -3,6 +3,7 @@
     <!-- 表头 -->
     <view class="table-header">
       <text class="header-item">考勤日期</text>
+      <text class="header-item">考勤时间</text>
       <text class="header-item">出勤结果</text>
       <text class="header-item">操作</text>
     </view>
@@ -10,6 +11,7 @@
     <!-- 表格内容 -->
     <view class="table-row" wx:for="{{records}}" wx:key="id">
       <text class="row-item">{{item.date}}</text>
+      <text class="row-item">{{item.time}}</text>
       <!-- 根据出勤结果动态设置字体颜色 -->
       <text class="row-item {{item.result === '出勤' ? 'present' : 'absent'}}">
         {{item.result}}
