@@ -4,9 +4,9 @@
   </view>
 <view class="class-list">
   <block wx:for="{{classList}}" wx:key="id">
-    <view class="class-item" bindtap="goToClassDetail" data-id="{{item.id}}">
-      <text class="class-name">{{item.name}}</text>
-      <text class="class-description">{{item.description}}</text>
+    <view class="class-item" bindtap="goToClassDetail" data-id="{{item.class_id}}">
+      <text class="class-name">{{item.class_name}}</text>
+      <text class="class-description">{{item.class_time}}</text>
     </view>
   </block>
   <!-- <view class="join-class-button">
