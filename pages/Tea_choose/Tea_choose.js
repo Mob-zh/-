@@ -43,7 +43,7 @@ Page({
           that.setData({
             classList: res.data // 假设 API 返回的是一个班级数组
           });
-          console.log(this.data.jwt)
+          console.log(this.data.classList);
         } else {
           console.error("获取班级列表失败:", res);
           wx.showToast({
