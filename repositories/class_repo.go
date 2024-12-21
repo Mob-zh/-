@@ -1,13 +1,16 @@
 package repositories
 
+import "C"
 import (
 	"attendance_uniapp/global"
 	"attendance_uniapp/models"
+	"github.com/go-redis/redis/v8"
 	"gorm.io/gorm"
 )
 
 type ClassRepository struct {
-	DB *gorm.DB
+	DB     *gorm.DB
+	Client *redis.Client
 }
 
 // NewClassRepository 返回一个 ClassRepository 实例
@@ -24,17 +27,29 @@ func (*ClassRepository) GetClassById(classId string) (*models.Class, error) {
 	return class, global.DB.First(class, classId).Error
 }
 
-func (*ClassRepository) GetStudentListByClassId(classId string) ([]*models.Student, error) {
-	var students []*models.Student
-	return students, global.DB.Table("student_classes").Select("students.*").Joins("JOIN students ON student_classes.student_id = students.id").Where("student_classes.class_id = ?", classId).Find(&students).Error
+func (classReno *ClassRepository) GetStudentInfoListByClassId(classId string) ([]models.Student, error) {
+	var class models.Class
+	var studentInfoList []models.Student
+	err := classReno.DB.Preload("Students").Order("student_id").First(&class, classId).Error
+	//密码字段置为空,防止泄露
+	for i := range class.Students {
+		studentInfoList = append(studentInfoList, models.Student{StudentId: class.Students[i].StudentId, StudentName: class.Students[i].StudentName, StudentPwd: ""})
+	}
+	return studentInfoList, err
 }
 
-func (*ClassRepository) GetClassListByStudentId(studentId string) ([]*models.Class, error) {
-	var classes []*models.Class
-	return classes, global.DB.Table("student_classes").Select("classes.*").Joins("JOIN classes ON student_classes.class_id = classes.id").Where("student_classes.student_id = ?", studentId).Find(&classes).Error
+func (classReno *ClassRepository) GetClassListByStudentId(studentId string) ([]models.Class, error) {
+	var student models.Student
+	return student.Classes, classReno.DB.Preload("Classes").Order("class_id").First(&student, studentId).Error
 }
 
-func (ClassRepo *ClassRepository) DeleteClassById(classId string) error {
+func (classReno *ClassRepository) DeleteClassById(classId string) error {
 	return global.DB.Where("class_id = ?", classId).Delete(&models.Class{}).Error
+}
 
+func (classReno *ClassRepository) GetStudentCountByClassId(classId string) int {
+	count := classReno.DB.Model(&models.Student{}).
+		Where("class_id = ?", classId).
+		Association("Classes").Count()
+	return int(count)
 }

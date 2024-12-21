@@ -6,15 +6,13 @@ import (
 )
 
 type StudentService struct {
-	StudentRepo *repositories.StudentRepository
-	ClassRepo   *repositories.ClassRepository
+	StudentRepo    *repositories.StudentRepository
+	ClassRepo      *repositories.ClassRepository
+	AttendanceReno *repositories.AttendanceRepository
 }
 
-func NewStudentService(studentRepo *repositories.StudentRepository, classRepo *repositories.ClassRepository) *StudentService {
-	return &StudentService{
-		StudentRepo: studentRepo,
-		ClassRepo:   classRepo,
-	}
+func NewStudentService(studentRepo *repositories.StudentRepository, classRepo *repositories.ClassRepository, attendanceReno *repositories.AttendanceRepository) *StudentService {
+	return &StudentService{StudentRepo: studentRepo, ClassRepo: classRepo, AttendanceReno: attendanceReno}
 }
 
 func (StudentServ *StudentService) GetStudentByIdService(studentId string) (*models.Student, error) {
@@ -25,22 +23,6 @@ func (StudentServ *StudentService) GetStudentByIdService(studentId string) (*mod
 	return queryForStudent, nil
 }
 
-func (StudentServ *StudentService) EnrollStudentInClassService(studentId string, classId string) error {
-	student := &models.Student{StudentId: studentId}
-	class := &models.Class{ClassId: classId}
-	// 由于studentId直接从JWT中获取，所以不需要检查studentId是否存在
-	// _, err := StudentServ.StudentRepo.GetStudentById(studentId)
-
-	// 检查classId是否存在
-	if _, err := StudentServ.ClassRepo.GetClassById(classId); err != nil {
-		return err
-	}
-	if err := StudentServ.StudentRepo.LinkStudentToClass(student, class); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (StudentServ *StudentService) StudentQuitFromClassService(studentId string, classId string) error {
-	return StudentServ.StudentRepo.UnlinkStudentFromClass(&models.Student{StudentId: studentId}, &models.Class{ClassId: classId})
+func (StudentServ *StudentService) ChangeStudentPwdByIdService(studentId string, newPwd string) error {
+	return StudentServ.StudentRepo.ChangeStudentPwdById(studentId, newPwd)
 }

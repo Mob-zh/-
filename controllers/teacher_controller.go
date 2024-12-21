@@ -10,16 +10,17 @@ import (
 )
 
 type TeacherController struct {
-	ClassServ   *services.ClassService
-	TeacherServ *services.TeacherService
-	CourseServ  *services.CourseService
+	ClassServ      *services.ClassService
+	TeacherServ    *services.TeacherService
+	CourseServ     *services.CourseService
+	AttendanceServ *services.AttendanceService
 }
 
-func NewTeacherController(TeacherServ *services.TeacherService, ClassServ *services.ClassService, CourseServ *services.CourseService) *TeacherController {
-	return &TeacherController{ClassServ: ClassServ, TeacherServ: TeacherServ, CourseServ: CourseServ}
+func NewTeacherController(TeacherServ *services.TeacherService, ClassServ *services.ClassService, CourseServ *services.CourseService, AttendanceServ *services.AttendanceService) *TeacherController {
+	return &TeacherController{ClassServ: ClassServ, TeacherServ: TeacherServ, CourseServ: CourseServ, AttendanceServ: AttendanceServ}
 }
 
-func (TeacherCtrl *TeacherController) TeacherGetHome(ctx *gin.Context) {
+func (TeacherCtrl *TeacherController) TeacherGetHomeHandler(ctx *gin.Context) {
 	teacherId := ctx.Param("user_id")
 	var classes []models.Class
 	classes, err := TeacherCtrl.TeacherServ.TeacherRepo.GetClassesByTeacherId(teacherId)
@@ -28,6 +29,7 @@ func (TeacherCtrl *TeacherController) TeacherGetHome(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, gin.H{"classes": classes})
 }
+
 func (TeacherCtrl *TeacherController) TeacherCreateClassHandler(ctx *gin.Context) {
 	var input struct {
 		ClassName string `json:"class_name" binding:"required"`
@@ -64,20 +66,17 @@ func (TeacherCtrl *TeacherController) TeacherCreateClassHandler(ctx *gin.Context
 		CourseId:           input.CourseId,
 		ClassTime:          input.ClassTime,
 		TeacherName:        teacherName,
-		IsClassChecking:    false,
 		CheckingEndTime:    time.Now(),
 		TotalCheckingTimes: 0,
 	}
-
-	if err := TeacherCtrl.ClassServ.ClassRepo.CreateClass(&classToCreate); err != nil {
-		TeacherCtrl.TeacherCreateClassHandler(ctx)
-		return
+	for err := TeacherCtrl.ClassServ.ClassRepo.CreateClass(&classToCreate); err != nil; classToCreate.ClassId, _ = utils.GenerateClassId(input.ClassName, input.ClassTime, ctx.GetString("user_id")) {
+		err = TeacherCtrl.ClassServ.ClassRepo.CreateClass(&classToCreate)
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{"msg": "Class created successfully"})
 }
 
-// 老师查看班级详情
+// TeacherGetClassInfoHandler 老师查看班级详情
 func (TeacherCtrl *TeacherController) TeacherGetClassInfoHandler(ctx *gin.Context) {
 	classId := ctx.Param("class_id")
 	queryForClass, _ := TeacherCtrl.ClassServ.GetClassByIdService(classId)
@@ -88,7 +87,7 @@ func (TeacherCtrl *TeacherController) TeacherGetClassInfoHandler(ctx *gin.Contex
 	})
 }
 
-// 老师查看该班级所有学生信息
+// TeacherGetClassStudentInfoHandler 老师查看该班级所有学生信息
 func (TeacherCtrl *TeacherController) TeacherGetClassStudentInfoHandler(ctx *gin.Context) {
 	classId := ctx.Param("class_id")
 	studentList, _ := TeacherCtrl.ClassServ.GetStudentListByClassIdService(classId)
@@ -104,19 +103,7 @@ func (TeacherCtrl *TeacherController) TeacherGetClassStudentInfoHandler(ctx *gin
 	})
 }
 
-//// 教师发起考勤
-//func (TeacherCtrl *TeacherController) TeacherCheckingAttendanceHandler(ctx *gin.Context) {
-//	classId := ctx.Param("class_id")
-//	var input struct {
-//		CheckingEndTime string `json:"checking_end_time"`
-//	}
-//	if err := ctx.ShouldBindJSON(&input); err != nil {
-//		ctx.JSON(http.StatusBadRequest, gin.H{"error": "错误的请求数据"})
-//	}
-//
-//}
-
-// 教师删除班级
+// TeacherDeleteClassHandler 教师删除班级
 func (TeacherCtrl *TeacherController) TeacherDeleteClassHandler(ctx *gin.Context) {
 	classId := ctx.Param("class_id")
 	if err := TeacherCtrl.ClassServ.DeleteClassByIdService(classId); err != nil {
@@ -124,4 +111,44 @@ func (TeacherCtrl *TeacherController) TeacherDeleteClassHandler(ctx *gin.Context
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{"message": "删除成功"})
+}
+
+// TeacherStartToCheckHandler 教师开始考勤
+func (TeacherCtrl *TeacherController) TeacherStartToCheckHandler(ctx *gin.Context) {
+	var input struct {
+		CheckingSeconds int `json:"checking_seconds"` // 考勤时长
+	}
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "请设置考勤时长"})
+		return
+	}
+
+	//初始化redis相应数据并获取签到码
+	signInCode, err := TeacherCtrl.AttendanceServ.StartToCheckAndGetSignInCodeService(ctx.Param("class_id"), input.CheckingSeconds)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "请检查您的网络并稍后再试"})
+	}
+	//响应签到码
+	ctx.JSON(http.StatusOK, gin.H{"sign_in_code": signInCode})
+}
+
+// TeacherGetSignedInCountHandler 获取实时签到计数情况，计数包括班级总人数，以“{{已签到人数}}/{{班级总人数}}”的形式返回
+func (TeacherCtrl *TeacherController) TeacherGetSignedInCountHandler(ctx *gin.Context) {
+	signInCount, err := TeacherCtrl.AttendanceServ.GetSignedInCountService(ctx.Param("class_id"))
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "请检查您的网络并稍后再试"})
+	}
+	ctx.JSON(http.StatusOK, gin.H{"signed_in_count": signInCount})
+}
+
+// TeacherGetSignInSummaryHandler 教师获取班级当前签到汇总
+func (TeacherCtrl *TeacherController) TeacherGetSignInSummaryHandler(ctx *gin.Context) {
+	//直接返回一个组件
+	component, err := TeacherCtrl.AttendanceServ.GetSignInSummaryService(ctx.Param("class_id"))
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "请检查您的网络并稍后再试"})
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"component": component})
+
 }

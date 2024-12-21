@@ -7,12 +7,13 @@ import (
 )
 
 type StudentController struct {
-	StudentServ *services.StudentService
-	ClassServ   *services.ClassService
+	StudentServ    *services.StudentService
+	ClassServ      *services.ClassService
+	AttendanceServ *services.AttendanceService
 }
 
-func NewStudentController(StudentServ *services.StudentService, ClassServ *services.ClassService) *StudentController {
-	return &StudentController{StudentServ: StudentServ, ClassServ: ClassServ}
+func NewStudentController(StudentServ *services.StudentService, ClassServ *services.ClassService, AttendanceServ *services.AttendanceService) *StudentController {
+	return &StudentController{StudentServ: StudentServ, ClassServ: ClassServ, AttendanceServ: AttendanceServ}
 }
 
 // StudentGetClassInfoHandler 学生进入某一班级详情页
@@ -66,7 +67,7 @@ func (StudentCtrl *StudentController) StudentJoinClassHandler(ctx *gin.Context) 
 		return
 	}
 	// 调用服务层加入班级
-	err := StudentCtrl.StudentServ.EnrollStudentInClassService(ctx.GetString("user_id"), input.ClassId)
+	err := StudentCtrl.ClassServ.EnrollStudentInClassService(ctx.GetString("user_id"), input.ClassId)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "请检查您的网络并稍后再试"})
 		return
@@ -84,7 +85,7 @@ func (StudentCtrl *StudentController) StudentQuitFromClassHandler(ctx *gin.Conte
 		return
 	}
 	// 调用服务层退出班级
-	err := StudentCtrl.StudentServ.StudentQuitFromClassService(ctx.GetString("user_id"), input.ClassId)
+	err := StudentCtrl.ClassServ.StudentQuitFromClassService(ctx.GetString("user_id"), input.ClassId)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "请检查您的网络并稍后再试"})
 		return
@@ -92,11 +93,20 @@ func (StudentCtrl *StudentController) StudentQuitFromClassHandler(ctx *gin.Conte
 	ctx.JSON(http.StatusOK, gin.H{"msg": "Class quit successfully"})
 }
 
-//// StudentSigninHandler 学生签到操作
-//func (StudentCtrl *StudentController) StudentSigninHandler(ctx *gin.Context) {
-//	var input struct {
-//		SigninTime string `json:"signin_time"`
-//		ClassId    string `json:"class_id"`
-//	}
-//
-//}
+// StudentSignInHandler 学生签到操作
+func (StudentCtrl *StudentController) StudentSignInHandler(ctx *gin.Context) {
+	var input struct {
+		SignCode string `json:"sign_code"`
+	}
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+	}
+
+	err := StudentCtrl.AttendanceServ.StudentSignInService(ctx.GetString("user_id"), input.SignCode, ctx.Param("class_id"))
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"msg": "签到成功"})
+
+}

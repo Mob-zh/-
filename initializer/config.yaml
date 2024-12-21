@@ -7,6 +7,6 @@ mysql:
   MaxOpenConns: 100
 redis:
   addr: "localhost:6379"
-  password: ""
+  password: "redis123"
   timeout: 3000
   db: 0

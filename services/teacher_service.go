@@ -16,3 +16,7 @@ func NewTeacherService(TeacherRepo *repositories.TeacherRepository) *TeacherServ
 func (TeacherServ *TeacherService) GetTeacherByIdService(teacherId string) (*models.Teacher, error) {
 	return TeacherServ.TeacherRepo.GetTeacherById(teacherId)
 }
+
+func (TeacherServ *TeacherService) ChangeTeacherPwdByIdService(teacherId string, newPwd string) error {
+	return TeacherServ.TeacherRepo.ChangeTeacherPwdById(teacherId, newPwd)
+}

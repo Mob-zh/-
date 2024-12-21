@@ -9,8 +9,8 @@ import (
 
 func SetupRouter() *gin.Engine {
 
-	studentCtrler := controllers.NewStudentController(initializer.StudentService, initializer.ClassService)
-	teacherCtrler := controllers.NewTeacherController(initializer.TeacherService, initializer.ClassService, initializer.CourseService)
+	studentCtrler := controllers.NewStudentController(initializer.StudentService, initializer.ClassService, initializer.AttendanceService)
+	teacherCtrler := controllers.NewTeacherController(initializer.TeacherService, initializer.ClassService, initializer.CourseService, initializer.AttendanceService)
 	commonCtrler := controllers.NewCommonController(initializer.StudentService, initializer.TeacherService)
 
 	r := gin.Default()
@@ -37,7 +37,7 @@ func SetupRouter() *gin.Engine {
 				//学生获取班级信息
 				class.GET("/info", studentCtrler.StudentGetClassInfoHandler)
 				//学生在该班级中进行签到操作
-				class.POST("/sign")
+				class.POST("/sign", studentCtrler.StudentSignInHandler)
 			}
 
 		}
@@ -50,7 +50,7 @@ func SetupRouter() *gin.Engine {
 		teacher.Use(middleware.ValidateJWT(), middleware.ValidateRole("teacher"))
 		{
 			//老师主页
-			teacher.GET("/home", teacherCtrler.TeacherGetHome)
+			teacher.GET("/home", teacherCtrler.TeacherGetHomeHandler)
 			//老师修改密码
 			teacher.PATCH("/changePwd", commonCtrler.ChangePwdHandler)
 			class := teacher.Group("/:class_id")
@@ -65,13 +65,14 @@ func SetupRouter() *gin.Engine {
 				//老师在该班级中进行考勤操作
 				class.POST("/sign")
 				{
-					class.POST("/sign/saveRecord")
-					class.POST("/sign/deleteRecord")
-
+					//教师开始考勤，响应签到码
+					class.GET("/start", teacherCtrler.TeacherStartToCheckHandler)
+					//签到过程中实时获取签到人数
+					class.GET("/count", teacherCtrler.TeacherGetSignedInCountHandler)
 				}
 				//老师在该班级中获取考勤记录
 				class.GET("/fetchRecord")
-				//老师手动补签(待定)
+				//老师手动补签
 				class.POST("/signRecord/fix")
 			}
 		}

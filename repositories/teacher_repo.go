@@ -25,3 +25,7 @@ func (*TeacherRepository) GetTeacherById(teacherId string) (*models.Teacher, err
 	var teacher models.Teacher
 	return &teacher, global.DB.Where("teacher_id = ?", teacherId).First(&teacher).Error
 }
+
+func (*TeacherRepository) ChangeTeacherPwdById(teacherId string, newPwd string) error {
+	return global.DB.Model(&models.Teacher{}).Where("teacher_id = ?", teacherId).Update("teacher_pwd", newPwd).Error
+}

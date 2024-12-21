@@ -7,6 +7,7 @@ var CourseRepository *repositories.CourseRepository
 var StudentRepository *repositories.StudentRepository
 var TeacherRepository *repositories.TeacherRepository
 var AttendanceRepository *repositories.AttendanceRepository
+var StudentClassRepository *repositories.StudentClassRepository
 
 func initRepositories() {
 	ClassRepository = repositories.NewClassRepository()
@@ -14,4 +15,5 @@ func initRepositories() {
 	StudentRepository = repositories.NewStudentRepository()
 	TeacherRepository = repositories.NewTeacherRepository()
 	AttendanceRepository = repositories.NewAttendanceRepository()
+	StudentClassRepository = repositories.NewStudentClassRepository()
 }

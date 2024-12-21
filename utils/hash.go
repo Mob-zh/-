@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"golang.org/x/crypto/bcrypt"
+	"math/rand"
 	"time"
 )
 
@@ -26,4 +27,10 @@ func GenerateClassId(className string, classTime string, teacherId string) (stri
 	hash := sha256.Sum256([]byte(data))
 	// 返回前 5 位
 	return hex.EncodeToString(hash[:])[:5], nil
+}
+func GenerateSignInCode() string {
+	randSource := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(randSource)
+	code := fmt.Sprintf("%06d", r.Intn(1000000))
+	return code
 }

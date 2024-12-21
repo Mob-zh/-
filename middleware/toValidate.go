@@ -5,6 +5,7 @@ import (
 	"attendance_uniapp/models"
 	"attendance_uniapp/utils"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 	"strings"
 )
@@ -16,6 +17,7 @@ func ValidateJWT() gin.HandlerFunc {
 		tokenString := ctx.GetHeader("Authorization")
 		parts := strings.Split(tokenString, " ")
 		if len(parts) != 2 || parts[0] != "Bearer" {
+			log.Printf("jwt为%v", tokenString)
 			ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid authorization format"})
 			ctx.Abort()
 			return

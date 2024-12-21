@@ -8,7 +8,7 @@
       <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="attendance_redis" uuid="da44d4fb-065b-4c9f-9b07-08e7e0d2ef0f">
+    <data-source source="LOCAL" name="uniapp_redis" uuid="77a6c9f8-1374-4ef1-9574-b80326ffb861">
       <driver-ref>redis</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>jdbc.RedisDriver</jdbc-driver>
